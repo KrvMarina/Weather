@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SheCodes Plus</title>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Weather</h1>
+        <form id="form-city">
+          <input class="input-city" type="text" placeholder="Enter city" />
+          <input class="submit-button" type="submit" value="Search" />
+          <button class="button-current">Current</button>
+        </form>
+      </div>
+
+      <div class="main">
+        <video autoplay muted loop id="myVideo">
+          <source src="images/sunny.mp4" type="video/mp4" />
+        </video>
+
+        <div class="text">
+          <div class="city-container">
+            <h3 class="city"></h3>
+            <img class="city-icon" src="" />
+          </div>
+
+          <div class="infotmathion">
+            <div class="left-text">
+              <p class="data-time">
+                <span id="day"></span> <span id="time"></span>
+              </p>
+            </div>
+            <div class="right-text">
+              <p class="humidity">Humidity: <span id="humidity"></span>%</p>
+              <p class="wind">Wind: <samp id="wind"></samp> km/h</p>
+            </div>
+          </div>
+
+          <h2 class="main-temperature">
+            <span id="temperature">1</span>
+            <span class="units">
+              <a href="#" id="celsius">°C</a> |
+              <a href="#" id="fahrenheit">°F</a>
+            </span>
+          </h2>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
