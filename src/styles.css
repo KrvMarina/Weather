@@ -119,7 +119,7 @@ h1 {
 
 .main-temperature {
   text-align: center;
-  margin: 60px auto;
+  margin: 40px auto;
   color: #fff;
   font-weight: 500;
   font-size: 60px;
@@ -149,4 +149,41 @@ h1 {
 .link {
   color: #fff;
   font-size: 14px;
+}
+
+.weather-days {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-forecast {
+  padding: 10px 16px;
+  width: 80px;
+  height: 100px;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column; /* Вирівнювання елементів у стовпчик */
+  justify-content: space-between;
+}
+
+.weather-forecast-icon {
+  width: 40px;
+  margin: 0 auto;
+}
+h4 {
+  font-weight: 500;
+  margin: 0;
+  color: #363636;
+}
+.weather-forecast-temperature-max {
+  font-size: 14px;
+  color: #363636;
+  font-weight: 600;
+}
+.weather-forecast-temperature-min {
+  font-size: 14px;
+  color: #6f6f6f;
 }
