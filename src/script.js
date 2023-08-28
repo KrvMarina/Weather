@@ -121,16 +121,20 @@ function showPosition(position) {
 }
 
 function showIcon(position) {
-  let mainIcon = position.data.weather[0].main;
+  let mainIcon = position.data.weather[0].icon;
   let icon = document.querySelector(".city-icon");
 
-  if (mainIcon == "Atmosphere") icon.src = "images/atmosphere.svg";
-  else if (mainIcon == "Clear") icon.src = "images/clear.svg";
-  else if (mainIcon == "Clouds") icon.src = "images/clouds.svg";
-  else if (mainIcon == "Drizzle") icon.src = "images/drizzle.svg";
-  else if (mainIcon == "Rain") icon.src = "images/rain.svg";
-  else if (mainIcon == "Snow") icon.src = "images/snow.svg";
-  else if (mainIcon == "Thunderstorm") icon.src = "images/thunderstorm.svg";
+  console.log(mainIcon);
+
+  if (mainIcon.startsWith("01")) icon.src = "images/01.svg";
+  else if (mainIcon.startsWith("02")) icon.src = "images/02.svg";
+  else if (mainIcon.startsWith("03") || mainIcon.startsWith("04"))
+    icon.src = "images/03.svg";
+  else if (mainIcon.startsWith("09")) icon.src = "images/09.svg";
+  else if (mainIcon.startsWith("10")) icon.src = "images/10.svg";
+  else if (mainIcon.startsWith("11")) icon.src = "images/11.svg";
+  else if (mainIcon.startsWith("13")) icon.src = "images/13.svg";
+  else if (mainIcon.startsWith("50")) icon.src = "images/50.svg";
 }
 
 function showKiev() {
