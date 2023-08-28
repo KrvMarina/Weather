@@ -5,36 +5,38 @@ let buttonCurrent = document.querySelector(".button-current");
 buttonCurrent.addEventListener("click", getCurrentPosition);
 
 //--->DATE
-let day = document.querySelector("#day");
-let time = document.querySelector("#time");
 
-let now = new Date();
+function formatDate(timestamp) {
+  let day = document.querySelector("#day");
+  let time = document.querySelector("#time");
+  let date = new Date(timestamp);
 
-let hours = now.getHours();
-let minutes = now.getMinutes();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
 
-if (hours < 10) {
-  hours = "0" + hours;
-}
-if (minutes < 10) {
-  minutes = "0" + minutes;
-}
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
 
-time.innerHTML = hours + ":" + minutes;
+  time.innerHTML = hours + ":" + minutes;
 
-let arrayDate = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+  let arrayDate = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
-for (let i in arrayDate) {
-  if (i == now.getDay()) {
-    day.innerHTML = arrayDate[i];
+  for (let i in arrayDate) {
+    if (i == date.getDay()) {
+      day.innerHTML = arrayDate[i];
+    }
   }
 }
 
@@ -73,6 +75,7 @@ function getAxios(url) {
     .then(function (response) {
       showWeatherValue(response);
       showIcon(response);
+      formatDate(response.data.dt * 1000);
     })
     .catch(function (error) {
       console.log(error);

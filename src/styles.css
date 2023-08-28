@@ -7,7 +7,7 @@ body {
   display: block;
   margin: 50px auto;
   width: 900px;
-  height: 400px;
+  height: 500px;
   background: #000000;
   border-radius: 10px;
   letter-spacing: 0.5px;
@@ -72,7 +72,7 @@ h1 {
 
 .main {
   padding: 40px 70px;
-  height: 254px;
+  height: 354px;
   position: relative;
 }
 .text {
