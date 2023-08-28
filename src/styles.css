@@ -151,7 +151,7 @@ h1 {
   font-size: 14px;
 }
 
-.weather-days {
+#weather-days {
   display: flex;
   justify-content: space-between;
 }

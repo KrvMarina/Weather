@@ -4,42 +4,6 @@ formCity.addEventListener("submit", formCityFunction);
 let buttonCurrent = document.querySelector(".button-current");
 buttonCurrent.addEventListener("click", getCurrentPosition);
 
-//--->DATE
-
-function formatDate(timestamp) {
-  let day = document.querySelector("#day");
-  let time = document.querySelector("#time");
-  let date = new Date(timestamp);
-
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-
-  if (hours < 10) {
-    hours = "0" + hours;
-  }
-  if (minutes < 10) {
-    minutes = "0" + minutes;
-  }
-
-  time.innerHTML = hours + ":" + minutes;
-
-  let arrayDate = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  for (let i in arrayDate) {
-    if (i == date.getDay()) {
-      day.innerHTML = arrayDate[i];
-    }
-  }
-}
-
 //--->units
 const celsius = document.querySelector("#celsius");
 const fahrenheit = document.querySelector("#fahrenheit");
@@ -90,6 +54,40 @@ function formCityFunction(event) {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
 
   getAxios(url);
+}
+
+function formatDate(timestamp) {
+  let day = document.querySelector("#day");
+  let time = document.querySelector("#time");
+  let date = new Date(timestamp);
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  time.innerHTML = hours + ":" + minutes;
+
+  let arrayDate = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  for (let i in arrayDate) {
+    if (i == date.getDay()) {
+      day.innerHTML = arrayDate[i];
+    }
+  }
 }
 
 function showWeatherValue(position) {
@@ -145,3 +143,25 @@ function showKiev() {
 }
 
 showKiev();
+
+function displayWeatherDays() {
+  let weatherDays = document.querySelector("#weather-days");
+
+  let weatherDaysHTML = "";
+  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+
+  days.forEach(function (day) {
+    weatherDaysHTML += `<div class="weather-forecast">
+              <h4 class="weather-forecast-date">${day}</h4>
+              <img class="weather-forecast-icon" src="images/01.svg" />
+              <div class="weather-forecast-temperatures">
+                <span class="weather-forecast-temperature-max"> 18° </span>
+                <span class="weather-forecast-temperature-min"> 12° </span>
+              </div>
+            </div>`;
+  });
+
+  weatherDays.innerHTML = weatherDaysHTML;
+}
+
+displayWeatherDays();
