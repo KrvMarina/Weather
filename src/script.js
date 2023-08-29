@@ -1,8 +1,8 @@
 let formCity = document.querySelector("#form-city");
 formCity.addEventListener("submit", formCityFunction);
 
-let buttonCurrent = document.querySelector(".button-current");
-buttonCurrent.addEventListener("click", getCurrentPosition);
+//let buttonCurrent = document.querySelector(".button-current");
+//buttonCurrent.addEventListener("click", getCurrentPosition);
 
 //--->units
 const celsius = document.querySelector("#celsius");
@@ -40,6 +40,7 @@ function getAxios(url) {
       showWeatherValue(response);
       showIcon(response);
       formatDate(response.data.dt * 1000);
+      getForecast(response.data.coord);
     })
     .catch(function (error) {
       console.log(error);
@@ -54,6 +55,72 @@ function formCityFunction(event) {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
 
   getAxios(url);
+}
+
+function showWeatherValue(position) {
+  cityAPI = position.data.name;
+  cityElement.innerHTML = cityAPI;
+  temperatureValue = Math.round(position.data.main.temp);
+  temperature.innerHTML = temperatureValue;
+
+  let humidity = document.querySelector("#humidity");
+  let wind = document.querySelector("#wind");
+  let humidityAPI = position.data.main.humidity;
+  let windAPI = Math.round(position.data.wind.speed);
+
+  humidity.innerHTML = humidityAPI;
+  wind.innerHTML = windAPI;
+}
+
+function showKiev() {
+  cityAPI = "Kiev";
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
+
+  getAxios(url);
+}
+
+showKiev();
+
+function displayForecast(response) {
+  console.log(response.data);
+  let weatherDays = document.querySelector("#weather-days");
+
+  let weatherDaysHTML = "";
+  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+
+  days.forEach(function (day) {
+    weatherDaysHTML += `<div class="weather-forecast">
+              <h4 class="weather-forecast-date">${day}</h4>
+              <img class="weather-forecast-icon" src="images/01.svg" />
+              <div class="weather-forecast-temperatures">
+                <span class="weather-forecast-temperature-max"> 18° </span>
+                <span class="weather-forecast-temperature-min"> 12° </span>
+              </div>
+            </div>`;
+  });
+  weatherDays.innerHTML = weatherDaysHTML;
+}
+
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "cabdbda40038ba7d1165b953b1c7bd6c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function showIcon(position) {
+  let mainIcon = position.data.weather[0].icon;
+  let icon = document.querySelector(".city-icon");
+
+  if (mainIcon.startsWith("01")) icon.src = "images/01.svg";
+  else if (mainIcon.startsWith("02")) icon.src = "images/02.svg";
+  else if (mainIcon.startsWith("03") || mainIcon.startsWith("04"))
+    icon.src = "images/03.svg";
+  else if (mainIcon.startsWith("09")) icon.src = "images/09.svg";
+  else if (mainIcon.startsWith("10")) icon.src = "images/10.svg";
+  else if (mainIcon.startsWith("11")) icon.src = "images/11.svg";
+  else if (mainIcon.startsWith("13")) icon.src = "images/13.svg";
+  else if (mainIcon.startsWith("50")) icon.src = "images/50.svg";
 }
 
 function formatDate(timestamp) {
@@ -90,22 +157,7 @@ function formatDate(timestamp) {
   }
 }
 
-function showWeatherValue(position) {
-  cityAPI = position.data.name;
-  cityElement.innerHTML = cityAPI;
-  temperatureValue = Math.round(position.data.main.temp);
-  temperature.innerHTML = temperatureValue;
-
-  let humidity = document.querySelector("#humidity");
-  let wind = document.querySelector("#wind");
-  let humidityAPI = position.data.main.humidity;
-  let windAPI = Math.round(position.data.wind.speed);
-
-  humidity.innerHTML = humidityAPI;
-  wind.innerHTML = windAPI;
-}
-
-function getCurrentPosition() {
+/*function getCurrentPosition() {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
@@ -117,51 +169,4 @@ function showPosition(position) {
 
   getAxios(url);
 }
-
-function showIcon(position) {
-  let mainIcon = position.data.weather[0].icon;
-  let icon = document.querySelector(".city-icon");
-
-  console.log(mainIcon);
-
-  if (mainIcon.startsWith("01")) icon.src = "images/01.svg";
-  else if (mainIcon.startsWith("02")) icon.src = "images/02.svg";
-  else if (mainIcon.startsWith("03") || mainIcon.startsWith("04"))
-    icon.src = "images/03.svg";
-  else if (mainIcon.startsWith("09")) icon.src = "images/09.svg";
-  else if (mainIcon.startsWith("10")) icon.src = "images/10.svg";
-  else if (mainIcon.startsWith("11")) icon.src = "images/11.svg";
-  else if (mainIcon.startsWith("13")) icon.src = "images/13.svg";
-  else if (mainIcon.startsWith("50")) icon.src = "images/50.svg";
-}
-
-function showKiev() {
-  cityAPI = "Kiev";
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
-
-  getAxios(url);
-}
-
-showKiev();
-
-function displayWeatherDays() {
-  let weatherDays = document.querySelector("#weather-days");
-
-  let weatherDaysHTML = "";
-  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
-
-  days.forEach(function (day) {
-    weatherDaysHTML += `<div class="weather-forecast">
-              <h4 class="weather-forecast-date">${day}</h4>
-              <img class="weather-forecast-icon" src="images/01.svg" />
-              <div class="weather-forecast-temperatures">
-                <span class="weather-forecast-temperature-max"> 18° </span>
-                <span class="weather-forecast-temperature-min"> 12° </span>
-              </div>
-            </div>`;
-  });
-
-  weatherDays.innerHTML = weatherDaysHTML;
-}
-
-displayWeatherDays();
+*/
