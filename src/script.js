@@ -38,7 +38,6 @@ function getAxios(url) {
     .get(url)
     .then(function (response) {
       showWeatherValue(response);
-      showIcon(response);
       formatDate(response.data.dt * 1000);
       getForecast(response.data.coord);
     })
@@ -70,34 +69,44 @@ function showWeatherValue(position) {
 
   humidity.innerHTML = humidityAPI;
   wind.innerHTML = windAPI;
+
+  let icon = document.querySelector(".city-icon");
+  icon.src = showIcon(position.data.weather[0].icon);
 }
 
-function showKiev() {
-  cityAPI = "Kiev";
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
+function formatDay(time) {
+  let date = new Date(time * 1000);
+  let day = date.getDay();
 
-  getAxios(url);
+  let arrayDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return arrayDay[day];
 }
-
-showKiev();
 
 function displayForecast(response) {
-  console.log(response.data);
+  let forecast = response.data.daily;
   let weatherDays = document.querySelector("#weather-days");
-
   let weatherDaysHTML = "";
-  let days = ["Thu", "Fri", "Sat", "Sun", "Mon"];
 
-  days.forEach(function (day) {
-    weatherDaysHTML += `<div class="weather-forecast">
-              <h4 class="weather-forecast-date">${day}</h4>
-              <img class="weather-forecast-icon" src="images/01.svg" />
+  forecast.forEach(function (day, index) {
+    if (index < 6) {
+      weatherDaysHTML += `<div class="weather-forecast">
+              <h4 class="weather-forecast-date">${formatDay(day.dt)}</h4>
+              <img class="weather-forecast-icon" src="${showIcon(
+                response.data.daily[index].weather[0].icon
+              )}" />
               <div class="weather-forecast-temperatures">
-                <span class="weather-forecast-temperature-max"> 18° </span>
-                <span class="weather-forecast-temperature-min"> 12° </span>
+                <span class="weather-forecast-temperature-max"> ${Math.round(
+                  day.temp.max
+                )}°</span>
+                <span class="weather-forecast-temperature-min"> ${Math.round(
+                  day.temp.min
+                )}°</span>
               </div>
             </div>`;
+    }
   });
+
   weatherDays.innerHTML = weatherDaysHTML;
 }
 
@@ -108,19 +117,16 @@ function getForecast(coordinates) {
   axios.get(apiUrl).then(displayForecast);
 }
 
-function showIcon(position) {
-  let mainIcon = position.data.weather[0].icon;
-  let icon = document.querySelector(".city-icon");
-
-  if (mainIcon.startsWith("01")) icon.src = "images/01.svg";
-  else if (mainIcon.startsWith("02")) icon.src = "images/02.svg";
+function showIcon(mainIcon) {
+  if (mainIcon.startsWith("01")) return "images/01.svg";
+  else if (mainIcon.startsWith("02")) return "images/02.svg";
   else if (mainIcon.startsWith("03") || mainIcon.startsWith("04"))
-    icon.src = "images/03.svg";
-  else if (mainIcon.startsWith("09")) icon.src = "images/09.svg";
-  else if (mainIcon.startsWith("10")) icon.src = "images/10.svg";
-  else if (mainIcon.startsWith("11")) icon.src = "images/11.svg";
-  else if (mainIcon.startsWith("13")) icon.src = "images/13.svg";
-  else if (mainIcon.startsWith("50")) icon.src = "images/50.svg";
+    return "images/03.svg";
+  else if (mainIcon.startsWith("09")) return "images/09.svg";
+  else if (mainIcon.startsWith("10")) return "images/10.svg";
+  else if (mainIcon.startsWith("11")) return "images/11.svg";
+  else if (mainIcon.startsWith("13")) return "images/13.svg";
+  else if (mainIcon.startsWith("50")) return "images/50.svg";
 }
 
 function formatDate(timestamp) {
@@ -156,6 +162,15 @@ function formatDate(timestamp) {
     }
   }
 }
+
+function showKiev() {
+  cityAPI = "Kiev";
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityAPI}&appid=${key}&units=metric`;
+
+  getAxios(url);
+}
+
+showKiev();
 
 /*function getCurrentPosition() {
   navigator.geolocation.getCurrentPosition(showPosition);
