@@ -1,9 +1,6 @@
 let formCity = document.querySelector("#form-city");
 formCity.addEventListener("submit", formCityFunction);
 
-//let buttonCurrent = document.querySelector(".button-current");
-//buttonCurrent.addEventListener("click", getCurrentPosition);
-
 //--->units
 const celsius = document.querySelector("#celsius");
 const fahrenheit = document.querySelector("#fahrenheit");
@@ -171,17 +168,3 @@ function showKiev() {
 }
 
 showKiev();
-
-/*function getCurrentPosition() {
-  navigator.geolocation.getCurrentPosition(showPosition);
-}
-
-function showPosition(position) {
-  let lat = position.coords.latitude.toFixed(1);
-  let lon = position.coords.longitude.toFixed(1);
-
-  let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
-
-  getAxios(url);
-}
-*/
